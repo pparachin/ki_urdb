@@ -1,0 +1,71 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <table class="table" id="songs-table">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Song Name</th>
+                <th>Genre</th>
+                <th>Length</th>
+                <th>Number of plays</th>
+                <th>Album name</th>
+                <th>Release year</th>
+                <th>Created at</th>
+                <th>Updated at</th>
+                <th>Update</th>
+                <th>Delete</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for song in songs.items %}
+            <tr>
+                <td>{{ song.id_s }}</td>
+                <td>{{ song.name }}</td>
+                <td>{{ song.genre.title }}</td>
+                <td>{{ song.length }}</td>
+                <td>{{ song.number_of_plays }}</td>
+                <td>{{ song.album.title }}</td>
+                <td>{{ song.release_year }}</td>
+                <td>{{ song.created_at.strftime("%d.%m.%Y %H:%M:%S")  }}</td>
+                <td>{{ song.updated_at.strftime("%d.%m.%Y %H:%M:%S") }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <!-- Pagination Links-->
+<div class="text-right">
+    <a href="{{ url_for('songs.index_view', page=songs.prev_num) }}"
+       class="btn btn-outline-dark
+       {% if songs.page == 1 %}disabled{% endif %}">
+        &laquo;
+    </a>
+    <!-- Loop through the number of pages to display a link for each-->
+    {% for page_num in songs.iter_pages(left_edge=1, right_edge=1, left_current=1, right_current=2) %}
+        {% if page_num %}
+        <!-- Check for the active page and set the link to "Active"-->
+            {% if songs.page == page_num %}
+            <a href="{{ url_for('songs.index_view', page=page_num) }}"
+               class="btn btn-dark">
+                {{ page_num }}
+            </a>
+            {% else %}
+            <a href="{{ url_for('songs.index_view', page=page_num) }}"
+               class="btn btn-outline-dark">
+                {{ page_num }}
+            </a>
+            {% endif %}
+        {% else %}
+            ...
+        {% endif %}
+    {% endfor %}
+    <a href="{{ url_for('songs.index_view', page=songs.next_num) }}"
+       class="btn btn-outline-dark
+       {% if songs.page == songs.pages %}disabled{% endif %}">
+        &raquo;
+    </a>
+</div>
+<p class="text-right mt-3">
+   Showing page {{ songs.page }} of {{ songs.pages }}
+</p>
+{% endblock %}

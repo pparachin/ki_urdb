@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<ul class="nav flex-column" style="text-align: center; margin-top: 20px">
+    <li class="nav-item">
+        <a class="nav-link" href="{{ url_for('songs.index_view') }}" style="color:black">Songs</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" href="{{ url_for('albums.index_view') }}" style="color:black">Albums</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" href="{{ url_for('authors.index_view') }}" style="color:black">Authors</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link disabled" href="#">Disabled</a>
+    </li>
+</ul>
+
+{% endblock %}

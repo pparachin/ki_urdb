@@ -1,0 +1,75 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="card" style="margin-top: 20px">
+    <div class="card-header text-center">
+        Authors
+    </div>
+    <table class="table" id="albums-table">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Nationality</th>
+                <th>Number of Songs</th>
+                <th>Number of Albums</th>
+                <th>Created at</th>
+                <th>Updated at</th>
+                <th>Update</th>
+                <th>Delete</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for author in authors.items %}
+            <tr>
+                <td>{{ author.id_a }}</td>
+                <td>{{ author.name }}</td>
+                <td>{{ author.nationality.nationality }}</td>
+                <td>{{ author.number_of_songs }}</td>
+                <td>{{ author.number_of_albums }}</td>
+                <td>{{ author.created_at.strftime("%d.%m.%Y %H:%M:%S")  }}</td>
+                <td>{{ author.updated_at.strftime("%d.%m.%Y %H:%M:%S") }}</td>
+                <td><a href="{{ url_for("authors.update_view", id=author.id_a) }}" class="btn btn-primary">Update</a></td>
+                <td><a href="#" class="btn btn-danger">Delete</a></td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>
+    <!-- Pagination Links-->
+<div class="text-right" style="margin-top: 20px">
+    <a href="{{ url_for('authors.index_view', page=authors.prev_num) }}"
+       class="btn btn-outline-dark
+       {% if authors.page == 1 %}disabled{% endif %}">
+        &laquo;
+    </a>
+    <!-- Loop through the number of pages to display a link for each-->
+    {% for page_num in authors.iter_pages(left_edge=1, right_edge=1, left_current=1, right_current=2) %}
+        {% if page_num %}
+        <!-- Check for the active page and set the link to "Active"-->
+            {% if authors.page == page_num %}
+            <a href="{{ url_for('authors.index_view', page=page_num) }}"
+               class="btn btn-dark">
+                {{ page_num }}
+            </a>
+            {% else %}
+            <a href="{{ url_for('authors.index_view', page=page_num) }}"
+               class="btn btn-outline-dark">
+                {{ page_num }}
+            </a>
+            {% endif %}
+        {% else %}
+            ...
+        {% endif %}
+    {% endfor %}
+    <a href="{{ url_for('authors.index_view', page=authors.next_num) }}"
+       class="btn btn-outline-dark
+       {% if authors.page == authors.pages %}disabled{% endif %}">
+        &raquo;
+    </a>
+</div>
+<p class="text-right mt-3">
+   Showing page {{ authors.page }} of {{ authors.pages }}
+</p>
+
+{% endblock %}
