@@ -1,40 +1,49 @@
 {% extends "base.html" %}
 
 {% block content %}
-    <table class="table" id="songs-table">
-        <thead>
-            <tr>
-                <th>ID</th>
-                <th>Song Name</th>
-                <th>Genre</th>
-                <th>Length</th>
-                <th>Number of plays</th>
-                <th>Album name</th>
-                <th>Release year</th>
-                <th>Created at</th>
-                <th>Updated at</th>
-                <th>Update</th>
-                <th>Delete</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for song in songs.items %}
-            <tr>
-                <td>{{ song.id_s }}</td>
-                <td>{{ song.name }}</td>
-                <td>{{ song.genre.title }}</td>
-                <td>{{ song.length }}</td>
-                <td>{{ song.number_of_plays }}</td>
-                <td>{{ song.album.title }}</td>
-                <td>{{ song.release_year }}</td>
-                <td>{{ song.created_at.strftime("%d.%m.%Y %H:%M:%S")  }}</td>
-                <td>{{ song.updated_at.strftime("%d.%m.%Y %H:%M:%S") }}</td>
-            </tr>
-            {% endfor %}
-        </tbody>
-    </table>
-    <!-- Pagination Links-->
-<div class="text-right">
+<div class="card" style="margin-top: 20px">
+    <div class="card-header text-center">
+        Songs
+    </div>
+    <div class="card-body text-center">
+        <table class="card-table table-bordered table-responsive" id="songs-table" style="word-break: break-all;margin: auto">
+            <thead>
+                <tr>
+                    <th scope="col" style="padding: 3px">ID</th>
+                    <th scope="col" style="padding: 10px">Song Name</th>
+                    <th scope="col" style="padding: 10px">Genre</th>
+                    <th scope="col" style="padding: 5px">Length</th>
+                    <th scope="col" style="padding: 10px">Number of plays</th>
+                    <th scope="col" style="padding: 7px">Album name</th>
+                    <th scope="col" style="padding: 10px">Release year</th>
+                    <th scope="col" style="padding: 10px">Created at</th>
+                    <th scope="col" style="padding: 10px">Updated at</th>
+                    <th scope="col" style="padding: 10px">Update</th>
+                    <th scope="col" style="padding: 10px">Delete</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for song in songs.items %}
+                <tr>
+                    <td>{{ song.id_s }}</td>
+                    <td>{{ song.name }}</td>
+                    <td>{{ song.genre.title }}</td>
+                    <td>{{ song.length }}</td>
+                    <td>{{ song.number_of_plays }}</td>
+                    <td>{{ song.album.title }}</td>
+                    <td>{{ song.release_year }}</td>
+                    <td style="padding: 5px">{{ song.created_at.strftime("%d.%m.%Y %H:%M:%S")  }}</td>
+                    <td style="padding: 5px">{{ song.updated_at.strftime("%d.%m.%Y %H:%M:%S") }}</td>
+                    <td style="padding: 5px"><a href="{{ url_for("songs.update_view", id=song.id_s) }}" class="btn btn-primary">Update</a></td>
+                    <td style="padding: 5px"><a href="#" class="btn btn-danger">Delete</a></td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<div class="text-right" style="margin-top: 20px">
     <a href="{{ url_for('songs.index_view', page=songs.prev_num) }}"
        class="btn btn-outline-dark
        {% if songs.page == 1 %}disabled{% endif %}">
@@ -67,5 +76,8 @@
 </div>
 <p class="text-right mt-3">
    Showing page {{ songs.page }} of {{ songs.pages }}
+</p>
+<p class="text-left mt-3">
+    <a href="{{ url_for("songs.add_view") }}" class="btn btn-primary">Add song</a>
 </p>
 {% endblock %}

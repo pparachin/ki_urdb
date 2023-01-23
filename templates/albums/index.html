@@ -5,38 +5,42 @@
     <div class="card-header text-center">
         Albums
     </div>
-    <table class="table" id="albums-table">
-        <thead>
-            <tr>
-                <th>ID</th>
-                <th>Title</th>
-                <th>Release Year</th>
-                <th>Number of songs</th>
-                <th>Length in sec</th>
-                <th>Author</th>
-                <th>Created at</th>
-                <th>Updated at</th>
-                <th>Update</th>
-                <th>Delete</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for album in albums.items %}
-            <tr>
-                <td>{{ album.id_a }}</td>
-                <td>{{ album.title }}</td>
-                <td>{{ album.release_year}}</td>
-                <td>{{ album.number_of_songs }}</td>
-                <td>{{ album.length_sec }}</td>
-                <td>{{ album.author.name }}</td>
-                <td>{{ album.created_at.strftime("%d.%m.%Y %H:%M:%S")  }}</td>
-                <td>{{ album.updated_at.strftime("%d.%m.%Y %H:%M:%S") }}</td>
-                <td><a href="{{ url_for("albums.update_view", id=album.id_a) }}" class="btn btn-primary">Update</a></td>
-                <td><a href="#" class="btn btn-danger">Delete</a></td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
+    <div class="card-body text-center">
+        <table class="card-table table-bordered table-responsive" id="songs-table" style="word-break: break-all;margin: auto">
+            <thead>
+                <tr>
+                    <th scope="col" style="padding: 3px">ID</th>
+                    <th scope="col" style="padding: 10px">Title</th>
+                    <th scope="col" style="padding: 10px">Release Year</th>
+                    <th scope="col" style="padding: 5px">Number of songs</th>
+                    <th scope="col" style="padding: 5px">Length in sec</th>
+                    <th scope="col" style="padding: 10px">Author</th>
+                    <th scope="col" style="padding: 10px">Created at</th>
+                    <th scope="col" style="padding: 10px">Updated at</th>
+                    <th scope="col" style="padding: 10px">Update</th>
+                    <th scope="col" style="padding: 10px">Delete</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for album in albums.items %}
+                <tr>
+                    <td>{{ album.id_a }}</td>
+                    <td style="padding: 5px"> {{ album.title }}</td>
+                    <td>{{ album.release_year}}</td>
+                    <td style="padding: 2px">{{ album.number_of_songs }}</td>
+                    <td>{{ album.length_sec }}</td>
+                    <td style="padding: 5px">{{ album.author.name }}</td>
+                    <td style="padding: 5px">{{ album.created_at.strftime("%d.%m.%Y %H:%M:%S")  }}</td>
+                    <td style="padding: 5px">{{ album.updated_at.strftime("%d.%m.%Y %H:%M:%S") }}</td>
+                    <td style="padding: 5px"><a href="{{ url_for("albums.update_view", id=album.id_a) }}" class="btn btn-primary">Update</a></td>
+                    <td style="padding: 5px"><a href="#" class="btn btn-danger" onclick="$('#album-delete--{{ album.id_a }}').submit()">Delete</a></td>
+                    <form action="{{ url_for("albums.delete_record", id=album.id_a)}}" method="POST" id="album-delete--{{ album.id_a }}">
+                    </form>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
 </div>
     <!-- Pagination Links-->
 <div class="text-right" style="margin-top: 20px">

@@ -1,3 +1,5 @@
+import datetime
+
 from flask import (render_template, request, url_for, redirect, flash)
 from sqlalchemy import update
 from albums import bp
@@ -33,12 +35,29 @@ def update_view(id):
         album.number_of_songs = request.form["number_of_songs"]
         album.length_sec = request.form["length_sec"]
         album.author_id = request.form["author"]
-
-        new_album = Albums(title=request.form["title"],release_year=request.form["release_year"],number_of_songs=request.form["number_of_songs"],length_sec=request.form["length_sec"],author_id=request.form["author"])
-        album.add(new_album)
+        album.updated_at = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+        album.verified = True
+        db.session.add(album)
+        db.session.commit()
 
         flash("Album updated", "success")
         return redirect(url_for("albums.index_view"))
 
-
     return render_template("albums/update.html", album=album, authors=authors)
+
+
+@bp.route("/delete/<id>", methods=["POST", "DELETE"])
+def delete_record(id):
+    if not id:
+        return redirect(url_for("albums.index_view"))
+    try:
+        album = Albums.query.get(id)
+    except Exception:
+        flash("This album does not exist", "error")
+        return redirect(url_for("albums.index_view"))
+
+    if request.method == "POST":
+        db.session.delete(album)
+        print(album.id_a)
+        db.session.commit()
+        return redirect(url_for("albums.index_view"))
