@@ -2,4 +2,73 @@
 
 {% block content %}
 
+<div class="card" style="margin-top: 20px">
+    <div class="card-header text-center">
+        Users
+    </div>
+    <div class="card-body text-center">
+        <table class="table table-bordered table-responsive" id="users-table" style="word-break: break-all;margin: auto">
+            <thead>
+                <tr>
+                    <th scope="col" style="padding: 3px">ID</th>
+                    <th scope="col" style="padding: 5px">Profile Name</th>
+                    <th scope="col" style="padding: 10px">E-mail</th>
+                    <th scope="col" style="padding: 5px">Date of Birth</th>
+                    <th scope="col" style="padding: 5px">Gender</th>
+                    <th scope="col" style="padding: 5px">Created at</th>
+                    <th scope="col" style="padding: 10px">Updated at</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for user in users.items %}
+                <tr>
+                    <td>{{ user.id_u }}</td>
+                    <td style="padding: 2px">{{ user.profile_name }}</td>
+                    <td style="padding: 2px;">{{ user.email }}</td>
+                    <td>{{ user.date_of_birth }}</td>
+                    <td>{{ user.gender_f.description }}</td>
+                    <td style="padding: 5px">{{ user.created_at.strftime("%d.%m.%Y %H:%M:%S")  }}</td>
+                    <td style="padding: 5px">{{ user.updated_at.strftime("%d.%m.%Y %H:%M:%S") }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+    
+<div class="text-right" style="margin-top: 20px">
+    <a href="{{ url_for('users.index_view', page=users.prev_num) }}"
+       class="btn btn-outline-dark
+       {% if users.page == 1 %}disabled{% endif %}">
+        &laquo;
+    </a>
+    <!-- Loop through the number of pages to display a link for each-->
+    {% for page_num in users.iter_pages(left_edge=1, right_edge=1, left_current=1, right_current=2) %}
+        {% if page_num %}
+        <!-- Check for the active page and set the link to "Active"-->
+            {% if users.page == page_num %}
+            <a href="{{ url_for('users.index_view', page=page_num) }}"
+               class="btn btn-dark">
+                {{ page_num }}
+            </a>
+            {% else %}
+            <a href="{{ url_for('users.index_view', page=page_num) }}"
+               class="btn btn-outline-dark">
+                {{ page_num }}
+            </a>
+            {% endif %}
+        {% else %}
+            ...
+        {% endif %}
+    {% endfor %}
+    <a href="{{ url_for('users.index_view', page=users.next_num) }}"
+       class="btn btn-outline-dark
+       {% if users.page == users.pages %}disabled{% endif %}">
+        &raquo;
+    </a>
+</div>
+<p class="text-right mt-3">
+   Showing page {{ users.page }} of {{ users.pages }}
+</p>
+
 {% endblock %}

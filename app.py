@@ -12,13 +12,14 @@ app.config.from_mapping(SECRET_KEY="dev")
 
 db = SQLAlchemy(app)
 
-import songs, albums, authors, genres, nationalities
+import songs, albums, authors, genres, nationalities, users
 
 app.register_blueprint(songs.bp)
 app.register_blueprint(albums.bp)
 app.register_blueprint(authors.bp)
 app.register_blueprint(genres.bp)
 app.register_blueprint(nationalities.bp)
+app.register_blueprint(users.bp)
 
 
 @app.route('/')
