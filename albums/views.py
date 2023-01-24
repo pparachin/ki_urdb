@@ -60,4 +60,30 @@ def delete_record(id):
         db.session.delete(album)
         print(album.id_a)
         db.session.commit()
+        flash('Album was successfully deleted from database', 'error')
         return redirect(url_for("albums.index_view"))
+
+
+@bp.route("/add", methods=["POST", "GET"])
+def add_view():
+    if request.method == "POST":
+        album_title = request.form["title"]
+        album_release_year = request.form["release_year"]
+        album_number_of_songs = request.form["number_of_songs"]
+        album_length_sec = request.form["length_sec"]
+        album_author_id = request.form["author"]
+        album_created_at = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+        album_updated_at = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+
+        album = Albums(title=album_title, release_year=album_release_year, number_of_songs=album_number_of_songs, length_sec=album_length_sec, author_id=album_author_id, created_at=album_created_at, updated_at=album_updated_at)
+
+        db.session.add(album)
+        db.session.commit()
+
+        flash("Album was successfully added to database!", "success")
+        return redirect(url_for("albums.index_view"))
+
+    else:
+        authors = Authors.query.all()
+        albums = Albums.query.all()
+        return render_template("albums/add.html", albums=albums, authors=authors)

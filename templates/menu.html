@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% block menu %}
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <a class="navbar-brand" href="{{ url_for('index_view') }}" style="margin-left: 10px">Home</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarNav">
+    <ul class="navbar-nav">
+      <li class="nav-item">
+        <a class="nav-link" href="{{ url_for('albums.index_view') }}">Albums</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="{{ url_for('authors.index_view') }}">Authors</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="{{ url_for('songs.index_view') }}">Songs</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="{{ url_for('genres.index_view') }}">Genres</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="{{ url_for('nationalities.index_view') }}">Nationalities</a>
+      </li>
+    </ul>
+  </div>
+</nav>
+{% endblock %}

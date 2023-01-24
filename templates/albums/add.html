@@ -2,5 +2,39 @@
 
 {% block content %}
 
+    <div class="card">
+        <div class="card-header text-center">
+            Add new Album
+        </div>
+        <div class="card-body">
+            <form method="post">
+                <div class="form-group">
+                    <label for="titleOfsong">Title of the album</label>
+                    <input name="title" id="title" type="text" class="form-control" required>
+                </div>
+                <div class="form-group">
+                    <label for="lengthOfSong">Release year</label>
+                    <input type="number" name="release_year" id="release_year" class="form-control">
+                </div>
+                <div class="form-group">
+                    <label for="numberOfSongs">Number Of Songs</label>
+                    <input name="number_of_songs" id="number_of_songs" type="number" class="form-control" required>
+                </div>
+                <div class="form-group">
+                    <label for="releaseYear">Length in sec</label>
+                    <input name="length_sec" id="length_sec" type="number" class="form-control" required>
+                </div>
+                <div class="form-group">
+                    <label for="genreSelect">Author</label>
+                    <select class="form-control" name="author" id="author">
+                        {% for author in authors %}
+                            <option value="{{ author.id_a }}">{{ author.name }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <button type="submit" class="btn btn-primary" style="margin-top: 10px">Add album</button>
+            </form>
+        </div>
+    </div>
 
 {% endblock %}

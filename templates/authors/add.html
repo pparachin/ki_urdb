@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+    <div class="card">
+        <div class="card-header text-center">
+            Add new Author
+        </div>
+        <div class="card-body">
+            <form method="post">
+                <div class="form-group">
+                    <label for="titleOfsong">Author's name</label>
+                    <input name="name" id="name" type="text" class="form-control" required>
+                </div>
+                <div class="form-group">
+                    <label for="genreSelect">Author's nationality</label>
+                    <select class="form-control" name="nationality" id="nationality">
+                        {% for nationality in nationalites %}
+                            <option value="{{ nationality.id_n }}">{{ nationality.nationality }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="numberOfSongs">Number Of Songs</label>
+                    <input name="number_of_songs" id="number_of_songs" type="number" class="form-control" required>
+                </div>
+                <div class="form-group">
+                    <label for="releaseYear">Number of Albums</label>
+                    <input name="number_of_albums" id="number_of_albums" type="number" class="form-control" required>
+                </div>
+                <button type="submit" class="btn btn-primary" style="margin-top: 10px">Add Author</button>
+            </form>
+        </div>
+    </div>
+
+{% endblock %}

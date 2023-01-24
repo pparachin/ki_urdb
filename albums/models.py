@@ -10,8 +10,8 @@ class Albums(db.Model):
     release_year = Column(Integer, nullable=False)
     number_of_songs = Column(Integer, nullable=False)
     length_sec = Column(Integer, nullable=False)
-    author_id = Column(Integer, ForeignKey(Authors.id_a, ondelete="CASCADE"))
-    author = relationship(Authors, cascade='save-update, merge, delete')
+    author_id = db.Column(db.Integer, db.ForeignKey(Authors.id_a), nullable=True)
+    author = db.relationship('Authors', lazy='select', backref=db.backref('Authors', lazy='joined'))
     created_at = Column(DateTime, nullable=True)
     updated_at = Column(DateTime, nullable=True)
 

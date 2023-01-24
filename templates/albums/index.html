@@ -1,4 +1,4 @@
-{% extends "base.html" %}
+{% extends "menu.html" %}
 
 {% block content %}
 <div class="card" style="margin-top: 20px">
@@ -6,7 +6,7 @@
         Albums
     </div>
     <div class="card-body text-center">
-        <table class="card-table table-bordered table-responsive" id="songs-table" style="word-break: break-all;margin: auto">
+        <table class="table table-bordered table-responsive" id="songs-table" style="word-break: break-all;margin: auto">
             <thead>
                 <tr>
                     <th scope="col" style="padding: 3px">ID</th>
@@ -77,5 +77,7 @@
 <p class="text-right mt-3">
    Showing page {{ albums.page }} of {{ albums.pages }}
 </p>
-
+<p class="text-left mt-3">
+    <a href="{{ url_for("albums.add_view") }}" class="btn btn-primary">Add album</a>
+</p>
 {% endblock %}

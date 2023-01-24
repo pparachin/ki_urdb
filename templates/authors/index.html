@@ -1,40 +1,42 @@
-{% extends "base.html" %}
+{% extends "menu.html" %}
 
 {% block content %}
 <div class="card" style="margin-top: 20px">
     <div class="card-header text-center">
         Authors
     </div>
-    <table class="table" id="albums-table">
-        <thead>
-            <tr>
-                <th>ID</th>
-                <th>Name</th>
-                <th>Nationality</th>
-                <th>Number of Songs</th>
-                <th>Number of Albums</th>
-                <th>Created at</th>
-                <th>Updated at</th>
-                <th>Update</th>
-                <th>Delete</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for author in authors.items %}
-            <tr>
-                <td>{{ author.id_a }}</td>
-                <td>{{ author.name }}</td>
-                <td>{{ author.nationality.nationality }}</td>
-                <td>{{ author.number_of_songs }}</td>
-                <td>{{ author.number_of_albums }}</td>
-                <td>{{ author.created_at.strftime("%d.%m.%Y %H:%M:%S")  }}</td>
-                <td>{{ author.updated_at.strftime("%d.%m.%Y %H:%M:%S") }}</td>
-                <td><a href="{{ url_for("authors.update_view", id=author.id_a) }}" class="btn btn-primary">Update</a></td>
-                <td><a href="#" class="btn btn-danger">Delete</a></td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
+    <div class="card-body text-center">
+        <table class="table table-bordered table-responsive" id="songs-table" style="word-break: break-all;margin: auto">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Nationality</th>
+                    <th>Number of Songs</th>
+                    <th>Number of Albums</th>
+                    <th>Created at</th>
+                    <th>Updated at</th>
+                    <th>Update</th>
+                    <th>Delete</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for author in authors.items %}
+                <tr>
+                    <td>{{ author.id_a }}</td>
+                    <td>{{ author.name }}</td>
+                    <td>{{ author.nationality.nationality }}</td>
+                    <td>{{ author.number_of_songs }}</td>
+                    <td>{{ author.number_of_albums }}</td>
+                    <td>{{ author.created_at.strftime("%d.%m.%Y %H:%M:%S")  }}</td>
+                    <td>{{ author.updated_at.strftime("%d.%m.%Y %H:%M:%S") }}</td>
+                    <td><a href="{{ url_for("authors.update_view", id=author.id_a) }}" class="btn btn-primary">Update</a></td>
+                    <td><a href="#" class="btn btn-danger">Delete</a></td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
 </div>
     <!-- Pagination Links-->
 <div class="text-right" style="margin-top: 20px">
@@ -71,5 +73,7 @@
 <p class="text-right mt-3">
    Showing page {{ authors.page }} of {{ authors.pages }}
 </p>
-
+<p class="text-left mt-3">
+    <a href="{{ url_for("authors.add_view") }}" class="btn btn-primary">Add author</a>
+</p>
 {% endblock %}

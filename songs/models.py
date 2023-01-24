@@ -4,22 +4,15 @@ from sqlalchemy import ForeignKey, Column, Integer, Table, String, DateTime
 from albums.models import Albums
 
 
-class Genres(db.Model):
-    id_g = Column(Integer, primary_key=True)
-    title = Column(String(32), nullable=False)
-    created_at = Column(DateTime, nullable=True)
-    updated_at = Column(DateTime, nullable=True)
-
-
 class Songs(db.Model):
     id_s = Column(Integer, primary_key=True)
     name = Column(String(128), nullable=False)
-    genre_id = Column(Integer, ForeignKey("genres.id_g"))
-    genre = relationship("Genres")
+    genre_id = Column(db.Integer, db.ForeignKey('genres.id_g'), nullable=False)
+    genre = relationship("Genres", lazy="select", backref=db.backref('Genres', lazy='joined'))
     length = Column(Integer, nullable=False)
     number_of_plays = Column(Integer, nullable=False)
-    album_id = Column(Integer, ForeignKey(Albums.id_a, ondelete='CASCADE'), nullable=True)
-    album = relationship(Albums, cascade='save-update, merge, delete')
+    album_id = db.Column(db.Integer, db.ForeignKey(Albums.id_a), nullable=True)
+    album = db.relationship('Albums', lazy='select', backref=db.backref('Albums', lazy='joined'))
     release_year = Column(Integer, nullable=True)
     created_at = Column(DateTime, nullable=True)
     updated_at = Column(DateTime, nullable=True)

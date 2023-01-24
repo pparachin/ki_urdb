@@ -4,7 +4,8 @@ from flask import (render_template, request, url_for, redirect, flash)
 
 from songs import bp
 
-from songs.models import Songs, Genres
+from songs.models import Songs
+from genres.models import Genres
 from albums.models import Albums
 from app import db
 
@@ -75,3 +76,21 @@ def add_view():
         genres = Genres.query.all()
         albums = Albums.query.all()
         return render_template("songs/add.html", albums=albums, genres=genres)
+
+
+@bp.route("/delete/<id>", methods=["POST", "DELETE"])
+def delete_record(id):
+    if not id:
+        return redirect(url_for("songs.index_view"))
+    try:
+        song = Songs.query.get(id)
+    except Exception:
+        flash("This song does not exist", "error")
+        return redirect(url_for("songs.index_view"))
+
+    if request.method == "POST":
+        db.session.delete(song)
+        print(song.id_s)
+        db.session.commit()
+        flash("Song was successfully deleted from database", "success")
+        return redirect(url_for("songs.index_view"))
