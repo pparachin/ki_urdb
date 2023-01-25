@@ -29,7 +29,7 @@
                     <td style="padding: 2px">{{ song.name }}</td>
                     <td>{{ song.genre.title }}</td>
                     <td>{{ song.length }}</td>
-                    <td>{{ song.number_of_plays }}</td>
+                    <td>{{ "{:,.2f}".format(song.number_of_plays) }}</td>
                     <td>{{ song.album.title }}</td>
                     <td>{{ song.release_year }}</td>
                     <td style="padding: 5px">{{ song.created_at.strftime("%d.%m.%Y %H:%M:%S")  }}</td>

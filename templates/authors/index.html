@@ -31,7 +31,9 @@
                     <td>{{ author.created_at.strftime("%d.%m.%Y %H:%M:%S")  }}</td>
                     <td>{{ author.updated_at.strftime("%d.%m.%Y %H:%M:%S") }}</td>
                     <td><a href="{{ url_for("authors.update_view", id=author.id_a) }}" class="btn btn-primary">Update</a></td>
-                    <td><a href="#" class="btn btn-danger">Delete</a></td>
+                    <td style="padding: 5px"><a href="#" class="btn btn-danger" onclick="$('#author-delete--{{ author.id_a }}').submit()">Delete</a></td>
+                    <form action="{{ url_for("authors.delete_record", id=author.id_a)}}" method="POST" id="author-delete--{{ author.id_a }}">
+                    </form>
                 </tr>
             {% endfor %}
             </tbody>

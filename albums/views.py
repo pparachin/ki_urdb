@@ -60,7 +60,7 @@ def delete_record(id):
         db.session.delete(album)
         print(album.id_a)
         db.session.commit()
-        flash('Album was successfully deleted from database', 'error')
+        flash('Album was successfully deleted from database', 'success')
         return redirect(url_for("albums.index_view"))
 
 
