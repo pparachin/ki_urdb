@@ -9,9 +9,9 @@ from app import db
 
 @bp.route("/")
 def index_view():
-    authors_new = db.paginate(db.select(Authors).order_by(Authors.id_a), per_page=10)
+    authors = db.paginate(db.select(Authors).order_by(Authors.id_a), per_page=10)
 
-    return render_template("authors/index.html", authors=authors_new)
+    return render_template("authors/index.html", authors=authors, title="SQLAlchemyORM - Authors")
 
 
 @bp.route("/edit/<id>", methods=["POST", "GET"])
@@ -62,7 +62,7 @@ def add_view():
         return redirect(url_for("authors.index_view"))
 
     else:
-        nationalities = Nationalities.query.all()
+        nationalities = db.session.execute(db.select(Nationalities)).unique().all()
         return render_template("authors/add.html", nationalites=nationalities)
 
 

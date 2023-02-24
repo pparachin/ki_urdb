@@ -1,21 +1,17 @@
 import datetime
 
 from flask import (render_template, request, url_for, redirect, flash)
-from sqlalchemy import update
 from albums import bp
 from app import db
-
 from albums.models import Albums
 from albums.models import Authors
 
 
 @bp.route("/")
 def index_view():
-    page = request.args.get('page', 1, type=int)
+    albums = db.paginate(db.select(Albums).order_by(Albums.id_a), per_page=10)
 
-    albums = Albums.query.paginate(page=page, per_page=10)
-
-    return render_template("albums/index.html", albums=albums)
+    return render_template("albums/index.html", albums=albums, title="SQLAlchemyORM - Albums")
 
 
 @bp.route("/edit/<id>", methods=["POST", "GET"])
@@ -23,21 +19,21 @@ def update_view(id):
     if not id:
         return redirect(url_for("albums.index_view"))
     try:
-        album = Albums.query.get(id)
-        authors = Authors.query.all()
+        album = db.session.execute(db.select(Albums).filter_by(id_a=id)).first()
+        authors = db.session.execute(db.select(Authors)).unique().all()
     except Exception:
         flash("This album does not exist", "error")
         return redirect(url_for("albums.index_view"))
 
     if request.method == "POST":
-        album.title = request.form["title"]
-        album.release_year = request.form["release_year"]
-        album.number_of_songs = request.form["number_of_songs"]
-        album.length_sec = request.form["length_sec"]
-        album.author_id = request.form["author"]
-        album.updated_at = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-        album.verified = True
-        db.session.add(album)
+        album[0].title = request.form["title"]
+        album[0].release_year = request.form["release_year"]
+        album[0].number_of_songs = request.form["number_of_songs"]
+        album[0].length_sec = request.form["length_sec"]
+        album[0].author_id = request.form["author"]
+        album[0].updated_at = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+        album[0].verified = True
+        db.session.add(album[0])
         db.session.commit()
 
         flash("Album updated", "success")
@@ -51,14 +47,13 @@ def delete_record(id):
     if not id:
         return redirect(url_for("albums.index_view"))
     try:
-        album = Albums.query.get(id)
+        album = db.session.execute(db.select(Albums).filter_by(id_a=id)).first()
     except Exception:
         flash("This album does not exist", "error")
         return redirect(url_for("albums.index_view"))
 
     if request.method == "POST":
-        db.session.delete(album)
-        print(album.id_a)
+        db.session.delete(album[0])
         db.session.commit()
         flash('Album was successfully deleted from database', 'success')
         return redirect(url_for("albums.index_view"))
@@ -84,6 +79,5 @@ def add_view():
         return redirect(url_for("albums.index_view"))
 
     else:
-        authors = Authors.query.all()
-        albums = Albums.query.all()
-        return render_template("albums/add.html", albums=albums, authors=authors)
+        authors = db.session.execute(db.select(Authors)).unique().all()
+        return render_template("albums/add.html", authors=authors)

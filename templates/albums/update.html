@@ -4,33 +4,34 @@
 
     <div class="card">
         <div class="card-header text-center">
-            Editing <span style="font-weight: bold">{{ album.title }}</span>
+            Editing <span style="font-weight: bold">{{ album[0].title }}</span>
         </div>
         <div class="card-body">
             <form method="post">
                 <div class="form-group">
                     <label for="titleOfAlbum">Title of album</label>
-                    <input name="title" id="title" type="text" class="form-control" value="{{ album.title }}" required>
+                    <input name="title" id="title" type="text" class="form-control" value="{{ album[0].title }}" required>
                 </div>
                 <div class="form-group">
                     <label for="releaseYear">Release Year</label>
-                    <input name="release_year" id="release_year" type="number" class="form-control" value="{{ album.release_year }}" required>
+                    <input name="release_year" id="release_year" type="number" class="form-control" value="{{ album[0].release_year }}" required>
                 </div>
                 <div class="form-group">
                     <label for="numberOfSongs">Number Of Songs</label>
-                    <input name="number_of_songs" id="number_of_songs" type="number" class="form-control" value="{{ album.number_of_songs }}" required>
+                    <input name="number_of_songs" id="number_of_songs" type="number" class="form-control" value="{{ album[0].number_of_songs }}" required>
                 </div>
                 <div class="form-group">
                     <label for="lengthInSec">Length in Seconds</label>
-                    <input name="length_sec" id="length_sec" type="number" class="form-control" value="{{ album.length_sec }}" required>
+                    <input name="length_sec" id="length_sec" type="number" class="form-control" value="{{ album[0].length_sec }}" required>
                 </div>
                 <div class="form-group">
                     <label for="authorSelect">Change author</label>
                     <select class="form-control" name="author" id="author">
-                    <option value="{{ album.author_id }}">{{ album.author.name }}</option>
+                    <option value="{{ album[0].author_id }}">{{ album[0].author.name }}</option>
                     {% for author in authors %}
-                        {% if author.id_a != album.author_id %}
-                            <option value="{{ author.id_a }}">{{ author.name }}</option>
+                        <!-- If for not showing current id two times -->
+                        {% if author[0].id_a != album[0].author_id %}
+                            <option value="{{ author[0].id_a }}">{{ author[0].name }}</option>
                         {% endif %}
                     {% endfor %}
                     </select>

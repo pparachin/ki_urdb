@@ -28,7 +28,7 @@
                     <label for="genreSelect">Author</label>
                     <select class="form-control" name="author" id="author">
                         {% for author in authors %}
-                            <option value="{{ author.id_a }}">{{ author.name }}</option>
+                            <option value="{{ author[0].id_a }}">{{ author[0].name }}</option>
                         {% endfor %}
                     </select>
                 </div>

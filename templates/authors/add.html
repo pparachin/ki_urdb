@@ -16,7 +16,7 @@
                     <label for="genreSelect">Author's nationality</label>
                     <select class="form-control" name="nationality" id="nationality">
                         {% for nationality in nationalites %}
-                            <option value="{{ nationality.id_n }}">{{ nationality.nationality }}</option>
+                            <option value="{{ nationality[0].id_n }}">{{ nationality[0].nationality }}</option>
                         {% endfor %}
                     </select>
                 </div>

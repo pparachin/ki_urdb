@@ -16,7 +16,7 @@ def index_view():
 
     songs = Songs.query.paginate(page=page, per_page=10)
 
-    return render_template("songs/index.html", songs=songs)
+    return render_template("songs/index.html", songs=songs, title="SQLAlchemyORM - Songs")
 
 
 @bp.route("/edit/<id>", methods=["POST", "GET"])

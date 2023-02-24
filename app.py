@@ -23,8 +23,8 @@ app.register_blueprint(users.bp)
 
 
 @app.route('/')
-def index_view():  # put application's code here
-    return render_template('index.html')
+def index_view():
+    return render_template('index.html', title="SQLAlchemyORM - Home")
 
 
 if __name__ == '__main__':
