@@ -4,32 +4,30 @@
 
     <div class="card">
         <div class="card-header text-center">
-            Editing <span style="font-weight: bold">{{ author.name }}</span>
+            Editing <span style="font-weight: bold">{{ author[0].name }}</span>
         </div>
         <div class="card-body">
             <form method="post">
                 <div class="form-group">
                     <label for="titleOfAlbum">Author's name</label>
-                    <input name="name" id="name" type="text" class="form-control" value="{{ author.name }}" required>
+                    <input name="name" id="name" type="text" class="form-control" value="{{ author[0].name }}" required>
                 </div>
                 <div class="form-group">
                     <label for="authorSelect">Author's nationality</label>
                     <select class="form-control" name="nationality" id="nationality">
-                    <option value="{{ author.nationality_id }}">{{ author.nationality.nationality }}</option>
+                    <option value="{{ author[0].nationality_id }}">{{ author[0].nationality.nationality }}</option>
                     {% for nationality in nationalities %}
-                        {% if nationality.id_a != nationality.author_id %}
-                            <option value="{{ nationality.id_a }}">{{ nationality.name }}</option>
-                        {% endif %}
+                            <option value="{{ nationality[0].id_n }}">{{ nationality[0].nationality }}</option>
                     {% endfor %}
                     </select>
                 </div>
                 <div class="form-group">
                     <label for="numberOfSongs">Number Of Songs</label>
-                    <input name="number_of_songs" id="number_of_songs" type="number" class="form-control" value="{{ author.number_of_songs }}" required>
+                    <input name="number_of_songs" id="number_of_songs" type="number" class="form-control" value="{{ author[0].number_of_songs }}" required>
                 </div>
                 <div class="form-group">
                     <label for="lengthInSec">Number of Albums</label>
-                    <input name="number_of_albums" id="number_of_albums" type="number" class="form-control" value="{{ author.number_of_albums }}" required>
+                    <input name="number_of_albums" id="number_of_albums" type="number" class="form-control" value="{{ author[0].number_of_albums }}" required>
                 </div>
                 <button type="submit" class="btn btn-primary" style="margin-top: 10px">Update</button>
             </form>
